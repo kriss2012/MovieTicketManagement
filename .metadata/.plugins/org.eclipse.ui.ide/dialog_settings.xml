@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="org.eclipse.buildship:3.1.11.v20250904-1000"/>
+		<item value="org.eclipse.egit.gitflow.feature:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.egit:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.epp.mpc:1.13.0.v20250816-1241"/>
+		<item value="org.eclipse.help:2.3.2500.v20260226-0420"/>
+		<item value="org.eclipse.jdt:3.20.500.v20260226-0420"/>
+		<item value="org.eclipse.jgit.gpg.bc:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.jgit.http.apache:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.jgit.lfs:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.jgit.ssh.apache:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.jgit:7.6.0.202603022253-r"/>
+		<item value="org.eclipse.jst.common.fproj.enablement.jdt:3.41.0.v202601060332"/>
+		<item value="org.eclipse.jst.enterprise_ui.feature:3.41.0.v202601060251"/>
+		<item value="org.eclipse.justj.openjdk.hotspot.jre.full:25.0.2.v20260203-1141"/>
+		<item value="org.eclipse.m2e.feature:2.10.100.20260205-1611"/>
+		<item value="org.eclipse.m2e.logback.feature:2.7.200.20251018-1026"/>
+		<item value="org.eclipse.m2e.wtp.feature:1.6.1.20231024-1618"/>
+		<item value="org.eclipse.mylyn.wikitext.feature:4.10.0.v20260106-1815"/>
+		<item value="org.eclipse.pde:3.16.600.v20260226-0420"/>
+		<item value="org.eclipse.platform:4.39.0.v20260226-0420"/>
+		<item value="org.eclipse.rcp:4.39.0.v20260226-0420"/>
+		<item value="org.eclipse.wst.common.fproj:3.41.0.v202601060332"/>
+		<item value="org.eclipse.wst.json_ui.feature:1.1.12.v202510300114"/>
+		<item value="org.eclipse.wst.web_ui.feature:3.41.0.v202601060332"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.41.0.v202601060332"/>
+		<item value="org.jboss.tools.m2e.wro4j.feature:1.2.1.202301111328"/>
+		<item value="org.sonatype.m2e.egit.feature:0.17.0.202209271423"/>
+	</list>
+</section>

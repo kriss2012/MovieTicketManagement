@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<header th:fragment="navbar">
+    <!-- Top Navigation Bar -->
+    <nav class="bms-navbar-top">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <!-- Brand Logo -->
+            <a class="bms-brand" th:href="@{/}">
+                🎬 book<span>my</span>show
+            </a>
+
+            <!-- Search Bar -->
+            <form th:action="@{/}" method="get" class="d-none d-md-flex align-items-center flex-grow-1 mx-4" style="max-width: 450px;">
+                <div class="input-group">
+                    <span class="input-group-text border-0 bg-secondary text-white" style="border-radius: 6px 0 0 6px;">
+                        🔍
+                    </span>
+                    <input type="text" name="search" th:value="${searchTerm}" class="form-control bms-search-input"
+                           placeholder="Search for Movies, Genres or Actors...">
+                </div>
+            </form>
+
+            <!-- User / Admin Actions & City Selector -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- Location Picker -->
+                <div class="d-none d-lg-block">
+                    <select class="bms-city-select">
+                        <option>📍 Bengaluru</option>
+                        <option>📍 Mumbai</option>
+                        <option>📍 Delhi-NCR</option>
+                        <option>📍 Hyderabad</option>
+                        <option>📍 Chennai</option>
+                    </select>
+                </div>
+
+                <!-- Session User / Authentication Links -->
+                <div th:if="${session.loggedInUser != null}" class="dropdown">
+                    <button class="btn bms-btn-primary dropdown-toggle d-flex align-items-center gap-2"
+                            type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 <span th:text="${session.loggedInUser.fullName}">User</span>
+                        <span th:if="${session.loggedInUser.isAdmin()}" class="badge bg-warning text-dark">Admin</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenu">
+                        <li th:if="${!session.loggedInUser.isAdmin()}">
+                            <a class="dropdown-item" th:href="@{/my-bookings}">🎟️ My Bookings</a>
+                        </li>
+                        <li th:if="${session.loggedInUser.isAdmin()}">
+                            <a class="dropdown-item fw-bold text-danger" th:href="@{/admin/dashboard}">⚡ Admin Portal</a>
+                        </li>
+                        <li th:if="${session.loggedInUser.isAdmin()}">
+                            <a class="dropdown-item" th:href="@{/movies}">🎬 Manage Movies</a>
+                        </li>
+                        <li th:if="${session.loggedInUser.isAdmin()}">
+                            <a class="dropdown-item" th:href="@{/theatres}">🎭 Manage Theatres</a>
+                        </li>
+                        <li th:if="${session.loggedInUser.isAdmin()}">
+                            <a class="dropdown-item" th:href="@{/shows}">🎟️ Manage Shows</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" th:href="@{/logout}">🚪 Sign Out</a></li>
+                    </ul>
+                </div>
+
+                <div th:if="${session.loggedInUser == null}" class="d-flex gap-2">
+                    <a th:href="@{/login}" class="btn bms-btn-primary">Sign In</a>
+                    <a th:href="@{/admin/login}" class="btn bms-btn-outline d-none d-sm-inline-block">Admin</a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Sub Navigation Bar -->
+    <nav class="bms-navbar-sub">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <a th:href="@{/}" class="bms-nav-link active">Movies</a>
+                <a th:href="@{/}" class="bms-nav-link">Stream</a>
+                <a th:href="@{/}" class="bms-nav-link">Events</a>
+                <a th:href="@{/}" class="bms-nav-link">Plays</a>
+                <a th:href="@{/}" class="bms-nav-link">Sports</a>
+            </div>
+            <div class="d-none d-md-flex align-items-center gap-3 text-muted">
+                <a th:href="@{/my-bookings}" class="bms-nav-link">ListYourShow</a>
+                <a th:href="@{/my-bookings}" class="bms-nav-link">Offers</a>
+                <a th:href="@{/my-bookings}" class="bms-nav-link">Gift Cards</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+</body>
+</html>

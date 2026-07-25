@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Login - BookMyShow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bookmyshow.css}">
+</head>
+
+<body style="background-color: #f2f3f7;">
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-dark text-white p-4 text-center">
+                    <h4 class="fw-bold mb-1">🎬 Welcome Back</h4>
+                    <p class="mb-0 text-muted small">Sign in to your BookMyShow user account</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+
+                    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">Error</div>
+                    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">Success</div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email" name="email" class="form-control form-control-lg fs-6" placeholder="name@example.com" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Password</label>
+                            <input type="password" name="password" class="form-control form-control-lg fs-6" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn bms-btn-primary btn-lg w-100 fw-bold mb-3">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="text-center text-muted small mt-3">
+                        Don't have an account? <a th:href="@{/register}" class="text-danger fw-bold">Register Now</a>
+                    </div>
+                    <hr>
+                    <div class="text-center text-muted small">
+                        Are you an Administrator? <a th:href="@{/admin/login}" class="text-dark fw-bold">Admin Portal Login</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

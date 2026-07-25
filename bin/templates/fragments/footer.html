@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<footer th:fragment="footer">
+    <div class="container text-center">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-4 text-start">
+                <h5 class="text-white fw-bold mb-1">🎬 bookmyshow</h5>
+                <p class="mb-0">Your ultimate entertainment destination for movie tickets.</p>
+            </div>
+            <div class="col-md-8 text-md-end mt-3 mt-md-0">
+                <a th:href="@{/}" class="me-3">Movies</a>
+                <a th:href="@{/my-bookings}" class="me-3">My Bookings</a>
+                <a th:href="@{/admin/login}" class="me-3">Admin Portal</a>
+                <a th:href="@{/login}">User Login</a>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <p class="mb-0 text-muted">&copy; 2026 BookMyShow Clone. All Rights Reserved. Pair programmed with Antigravity.</p>
+    </div>
+</footer>
+
+</body>
+</html>

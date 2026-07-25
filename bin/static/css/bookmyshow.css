@@ -1,0 +1,476 @@
+/* =========================================================
+   BookMyShow Modern CSS Design System
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --bms-primary: #f84464;
+    --bms-primary-hover: #e03251;
+    --bms-bg-dark: #12151e;
+    --bms-header-dark: #1f2533;
+    --bms-card-bg: #1a1d29;
+    --bms-text-muted: #999999;
+    --bms-border-dark: #2c3245;
+    --bms-seat-available: #ffffff;
+    --bms-seat-selected: #1ea83c;
+    --bms-seat-sold: #444a5a;
+    --bms-yellow: #ffc107;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f5f7;
+    color: #222222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Dark Top Header --- */
+.bms-navbar-top {
+    background-color: var(--bms-header-dark);
+    padding: 12px 0;
+}
+
+.bms-brand {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #ffffff !important;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.bms-brand span {
+    color: var(--bms-primary);
+}
+
+.bms-search-input {
+    background: #2b3144;
+    border: 1px solid #3b4259;
+    color: #ffffff !important;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.bms-search-input::placeholder {
+    color: #8f98af;
+}
+
+.bms-search-input:focus {
+    background: #333a50;
+    box-shadow: none;
+    border-color: var(--bms-primary);
+}
+
+.bms-city-select {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.bms-btn-primary {
+    background-color: var(--bms-primary);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px 20px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.bms-btn-primary:hover {
+    background-color: var(--bms-primary-hover);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(248, 68, 100, 0.3);
+}
+
+.bms-btn-outline {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+
+.bms-btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+/* --- Secondary Sub-Header Navigation --- */
+.bms-navbar-sub {
+    background-color: #1a1d29;
+    border-top: 1px solid #292d3e;
+    padding: 8px 0;
+    font-size: 0.88rem;
+}
+
+.bms-nav-link {
+    color: #cccccc !important;
+    font-weight: 500;
+    margin-right: 20px;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.bms-nav-link:hover, .bms-nav-link.active {
+    color: var(--bms-primary) !important;
+}
+
+/* --- Hero Banner Carousel --- */
+.bms-hero-carousel {
+    background-color: var(--bms-bg-dark);
+    padding: 30px 0;
+}
+
+.bms-banner-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 340px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.bms-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65);
+}
+
+.bms-banner-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+    color: #ffffff;
+}
+
+.bms-badge-rating {
+    background-color: #333a4d;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bms-star-icon {
+    color: var(--bms-yellow);
+}
+
+/* --- Filter Bar --- */
+.bms-filter-bar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e4e8;
+    padding: 15px 0;
+}
+
+.bms-filter-pill {
+    background: #f2f3f7;
+    color: #444444;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-right: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.bms-filter-pill:hover, .bms-filter-pill.active {
+    background: var(--bms-primary);
+    color: #ffffff;
+}
+
+/* --- Movie Cards Grid --- */
+.bms-movie-card {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.bms-movie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.bms-poster-container {
+    position: relative;
+    width: 100%;
+    padding-top: 145%; /* 1:1.45 aspect ratio */
+    overflow: hidden;
+    background-color: #202430;
+}
+
+.bms-poster-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bms-rating-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.bms-movie-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.bms-movie-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bms-movie-meta {
+    font-size: 0.8rem;
+    color: #666666;
+    margin-bottom: 12px;
+}
+
+.bms-btn-book {
+    background-color: var(--bms-primary);
+    color: #ffffff;
+    width: 100%;
+    font-weight: 700;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin-top: auto;
+    font-size: 0.88rem;
+}
+
+.bms-btn-book:hover {
+    background-color: var(--bms-primary-hover);
+    color: #ffffff;
+}
+
+/* --- Movie Detail Header --- */
+.bms-detail-banner {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    padding: 50px 0;
+}
+
+.bms-detail-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(18, 21, 30, 0.96) 0%, rgba(18, 21, 30, 0.82) 50%, rgba(18, 21, 30, 0.95) 100%);
+}
+
+.bms-detail-container {
+    position: relative;
+    z-index: 2;
+}
+
+.bms-detail-poster {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+.bms-tag-pill {
+    background: rgba(255,255,255,0.15);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 16px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+/* --- Interactive Seat Matrix --- */
+.bms-screen-wrapper {
+    text-align: center;
+    margin: 20px 0 40px 0;
+    perspective: 400px;
+}
+
+.bms-screen-arc {
+    height: 35px;
+    background: linear-gradient(180deg, #157aff 0%, rgba(21, 122, 255, 0.05) 100%);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    box-shadow: 0 10px 30px rgba(21, 122, 255, 0.4);
+    margin: 0 auto;
+    width: 75%;
+}
+
+.bms-screen-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #8893a7;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.seat-row-label {
+    font-weight: 700;
+    width: 24px;
+    color: #8893a7;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.seat-box {
+    width: 32px;
+    height: 30px;
+    border: 1px solid #1ea83c;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #1ea83c;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    background: #ffffff;
+}
+
+.seat-box:hover:not(.booked) {
+    background-color: #1ea83c;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.seat-box.selected {
+    background-color: #1ea83c !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 10px rgba(30, 168, 60, 0.5);
+}
+
+.seat-box.booked {
+    background-color: #e5e7eb;
+    border-color: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.bms-tier-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+    margin: 25px 0 15px 0;
+    text-align: center;
+}
+
+/* Sticky Bottom Selection Summary Drawer */
+.bms-bottom-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    padding: 16px 0;
+    z-index: 1000;
+}
+
+/* --- Digital Ticket Pass Aesthetic --- */
+.bms-ticket-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border: 1px dashed #d0d5dd;
+    position: relative;
+}
+
+.bms-ticket-header {
+    background-color: var(--bms-header-dark);
+    color: #ffffff;
+    padding: 24px;
+}
+
+.bms-ticket-body {
+    padding: 24px;
+}
+
+.bms-qr-box {
+    background: #f8f9fa;
+    border: 2px dashed #cccccc;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: var(--bms-header-dark);
+    color: #aaaaaa;
+    margin-top: auto;
+    padding: 30px 0;
+    font-size: 0.85rem;
+}
+
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--bms-primary);
+}

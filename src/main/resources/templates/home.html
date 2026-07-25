@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BookMyShow - Book Movie Tickets Online</title>
+    <meta name="description" content="Book movie tickets online at the best prices. Choose from hundreds of movies across top theatres near you.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bookmyshow.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="mobile-app-layout">
+
+<!-- TOP NAVBAR -->
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="/" class="nav-logo">
+            <i class="fas fa-film"></i>
+            <span>BookMyShow</span>
+        </a>
+        <div class="nav-search">
+            <form th:action="@{/movies}" method="get" class="search-form">
+                <input type="text" name="search" placeholder="Search for movies, theatres..." class="search-input"
+                       th:value="${searchTerm}">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/movies}" class="nav-link desktop-only">Movies</a>
+            <sec:authorize access="isAuthenticated()">
+                <a th:href="@{/booking/history}" class="nav-link desktop-only">My Bookings</a>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <a th:href="@{/admin/dashboard}" class="nav-link nav-admin">
+                        <i class="fas fa-shield-alt"></i> Admin
+                    </a>
+                </sec:authorize>
+                <form th:action="@{/logout}" method="post" style="display:inline">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="btn-nav-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn-nav">Sign In</a>
+                <a th:href="@{/register}" class="btn-nav btn-nav-primary">Sign Up</a>
+            </sec:authorize>
+        </div>
+    </div>
+</nav>
+
+<!-- MOBILE SEARCH BAR (Android / Phone Only) -->
+<div class="mobile-search-wrapper mobile-only">
+    <div class="container">
+        <form th:action="@{/movies}" method="get" class="search-form">
+            <input type="text" name="search" placeholder="Search movies, languages..." class="search-input" th:value="${searchTerm}">
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>
+
+<!-- HERO BANNER -->
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">🎬 Now Showing</div>
+        <h1 class="hero-title">Your Next <span class="gradient-text">Movie Experience</span> Awaits</h1>
+        <p class="hero-subtitle">Book tickets for the latest blockbusters at theatres near you</p>
+        <a th:href="@{/movies}" class="btn-hero">
+            <i class="fas fa-ticket-alt"></i> Book Tickets Now
+        </a>
+    </div>
+</section>
+
+<!-- GENRE / LANGUAGE SWIPE FILTER BAR -->
+<section class="filter-section">
+    <div class="container">
+        <div class="filter-bar">
+            <a th:href="@{/movies}" class="filter-chip" th:classappend="${activeGenre == null and activeLanguage == null and searchTerm == null ? ' active' : ''}">All Movies</a>
+            <a th:each="genre : ${genres}" th:href="@{/movies(genre=${genre})}"
+               class="filter-chip" th:classappend="${activeGenre == genre ? ' active' : ''}"
+               th:text="${genre}">Genre</a>
+        </div>
+    </div>
+</section>
+
+<!-- ALERT MESSAGES -->
+<div class="container" th:if="${successMessage != null}">
+    <div class="alert alert-success"><i class="fas fa-check-circle"></i> <span th:text="${successMessage}"></span></div>
+</div>
+<div class="container" th:if="${errorMessage != null}">
+    <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span></div>
+</div>
+
+<!-- MOVIES CATALOGUE GRID -->
+<section class="movies-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title" th:if="${searchTerm != null and !#strings.isEmpty(searchTerm)}">
+                Search results for: "<span th:text="${searchTerm}"></span>"
+            </h2>
+            <h2 class="section-title" th:if="${searchTerm == null or #strings.isEmpty(searchTerm)}">Now Showing</h2>
+        </div>
+
+        <div class="movies-grid" th:if="${movies != null and !movies.isEmpty()}">
+            <div class="movie-card" th:each="movie : ${movies}">
+                <div class="movie-poster-wrap">
+                    <img th:src="${movie.posterUrl != null ? movie.posterUrl : '/images/ramayana.jpg'}"
+                         th:alt="${movie.title}" class="movie-poster" loading="lazy">
+                    <div class="movie-overlay">
+                        <a th:href="@{/movies/{id}(id=${movie.movieId})}" class="btn-book-now">
+                            <i class="fas fa-ticket-alt"></i> Book Now
+                        </a>
+                    </div>
+                    <div class="movie-badge" th:text="${movie.certificate != null ? movie.certificate : 'U/A'}">U/A</div>
+                    <div class="movie-rating" th:if="${movie.rating != null}">
+                        <i class="fas fa-star"></i>
+                        <span th:text="${movie.rating}">8.5</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title" th:text="${movie.title}">Movie Title</h3>
+                    <div class="movie-meta">
+                        <span class="meta-tag" th:text="${movie.genre}">Action</span>
+                        <span class="meta-separator">•</span>
+                        <span class="meta-tag" th:text="${movie.language}">English</span>
+                    </div>
+                    <div class="movie-duration" th:if="${movie.durationMinutes != null}">
+                        <i class="fas fa-clock"></i>
+                        <span th:text="${movie.durationMinutes + ' mins'}">120 mins</span>
+                    </div>
+                    <a th:href="@{/movies/{id}(id=${movie.movieId})}" class="mobile-card-btn mobile-only">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-state" th:if="${movies == null or movies.isEmpty()}">
+            <i class="fas fa-film fa-4x"></i>
+            <h3>No Movies Found</h3>
+            <p>Try adjusting your search or filters</p>
+            <a th:href="@{/movies}" class="btn-primary">View All Movies</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo"><i class="fas fa-film"></i> BookMyShow</div>
+                <p>Your ultimate movie ticket booking platform. Experience cinema like never before.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a th:href="@{/movies}">Movies</a></li>
+                    <li><a th:href="@{/login}">Login</a></li>
+                    <li><a th:href="@{/register}">Register</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Download App</h4>
+                <div class="app-badges">
+                    <a href="#" class="app-badge"><i class="fab fa-google-play"></i> Google Play</a>
+                    <a href="#" class="app-badge"><i class="fab fa-apple"></i> App Store</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BookMyShow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ANDROID / MOBILE BOTTOM NAVIGATION BAR -->
+<div class="mobile-bottom-nav mobile-only">
+    <a href="/" class="bottom-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a th:href="@{/movies}" class="bottom-nav-item">
+        <i class="fas fa-film"></i>
+        <span>Movies</span>
+    </a>
+    <sec:authorize access="isAuthenticated()">
+        <a th:href="@{/booking/history}" class="bottom-nav-item">
+            <i class="fas fa-ticket-alt"></i>
+            <span>Bookings</span>
+        </a>
+    </sec:authorize>
+    <sec:authorize access="!isAuthenticated()">
+        <a th:href="@{/login}" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Sign In</span>
+        </a>
+    </sec:authorize>
+</div>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

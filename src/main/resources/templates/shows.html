@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shows Schedule - Admin Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bookmyshow.css}">
+</head>
+
+<body style="background-color: #f2f3f7;">
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">🎟️ Showtimes Schedule</h3>
+            <p class="text-muted small mb-0">Manage active movie screenings, dates and ticket pricing</p>
+        </div>
+        <a th:href="@{/shows/add}" class="btn btn-primary font-weight-bold">➕ Add New Show</a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Show ID</th>
+                            <th>Movie</th>
+                            <th>Theatre</th>
+                            <th>Show Date</th>
+                            <th>Show Time</th>
+                            <th>Ticket Price</th>
+                            <th>Available Seats</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="s : ${shows}">
+                            <td class="fw-bold" th:text="${s.showId}">1</td>
+                            <td class="fw-bold text-dark" th:text="${s.movie != null ? s.movie.title : 'N/A'}">Movie</td>
+                            <td th:text="${s.theatre != null ? s.theatre.theatreName : 'N/A'}">Theatre</td>
+                            <td th:text="${s.showDate}">2026-07-24</td>
+                            <td class="fw-bold" th:text="${s.showTime}">14:30</td>
+                            <td class="fw-bold text-danger" th:text="${'₹ ' + s.ticketPrice}">₹ 250</td>
+                            <td>
+                                <span class="badge bg-success" th:text="${s.availableSeats + ' Seats'}">100 Seats</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/shows/{id}/seats(id=${s.showId})}" class="btn btn-sm btn-outline-primary me-1">Seat Layout</a>
+                                <a th:href="@{/shows/edit/{id}(id=${s.showId})}" class="btn btn-sm btn-outline-warning me-1">Edit</a>
+                                <a th:href="@{/shows/delete/{id}(id=${s.showId})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this show?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

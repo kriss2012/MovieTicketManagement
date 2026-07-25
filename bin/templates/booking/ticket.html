@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Ticket Pass - BookMyShow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bookmyshow.css}">
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printableTicket, #printableTicket * { visibility: visible; }
+            #printableTicket { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+
+<body style="background-color: #f2f3f7;">
+
+<div th:replace="fragments/navbar :: navbar" class="no-print"></div>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="alert alert-success text-center mb-4 no-print shadow-sm">
+                <h4 class="fw-bold alert-heading mb-1">🎉 Booking Confirmed!</h4>
+                <p class="mb-0">Your tickets have been successfully booked. Present this pass at the cinema entrance.</p>
+            </div>
+
+            <!-- Ticket Pass Card -->
+            <div id="printableTicket" class="bms-ticket-card">
+
+                <div class="bms-ticket-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-0">🎬 bookmyshow</h4>
+                        <span class="badge bg-danger mt-1">E-TICKET PASS</span>
+                    </div>
+                    <div class="text-end">
+                        <div class="small opacity-75">BOOKING CODE</div>
+                        <h5 class="fw-bold mb-0 text-warning" th:text="${booking.bookingReference}">BMS-89X24</h5>
+                    </div>
+                </div>
+
+                <div class="bms-ticket-body">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-3 col-sm-2">
+                            <img th:src="${booking.show.movie.posterUrl != null ? booking.show.movie.posterUrl : 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80'}"
+                                 class="img-fluid rounded-3 shadow-sm" th:alt="${booking.show.movie.title}">
+                        </div>
+                        <div class="col-9 col-sm-10">
+                            <h3 class="fw-bold text-dark mb-1" th:text="${booking.show.movie.title}">Movie Title</h3>
+                            <div class="text-muted small mb-1" th:text="${booking.show.movie.language + ' • ' + booking.show.movie.genre}">Language</div>
+                            <div class="badge bg-dark" th:text="${booking.show.movie.certification != null ? booking.show.movie.certification : 'UA'}">UA</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 border-top border-bottom py-3 mb-4">
+                        <div class="col-6 col-sm-3">
+                            <div class="text-muted small">THEATRE</div>
+                            <strong class="text-dark d-block text-truncate" th:text="${booking.show.theatre.theatreName}">PVR IMAX</strong>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="text-muted small">DATE & TIME</div>
+                            <strong class="text-dark d-block" th:text="${booking.show.showDate + ' ' + booking.show.showTime}">Date</strong>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="text-muted small">SEATS</div>
+                            <strong class="text-danger d-block fs-5" th:text="${booking.selectedSeats}">A1, A2</strong>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="text-muted small">TOTAL PAID</div>
+                            <strong class="text-dark d-block" th:text="${'₹ ' + #numbers.formatDecimal(booking.totalAmount, 1, 2)}">₹ 570.00</strong>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-sm-7 mb-3 mb-sm-0">
+                            <div class="text-muted small mb-1">BOOKING DETAILS</div>
+                            <div>Name: <strong th:text="${booking.customerName}">Rahul Sharma</strong></div>
+                            <div>Email: <strong th:text="${booking.customerEmail}">rahul@gmail.com</strong></div>
+                            <div>Payment: <span class="badge bg-success" th:text="${booking.paymentMethod + ' - ' + booking.paymentStatus}">CONFIRMED</span></div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="bms-qr-box">
+                                <div class="fs-1">📱 SCAN QR</div>
+                                <div class="font-monospace small text-muted mt-1" th:text="${booking.bookingReference}">BMS-89X24</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Print & Navigation Action Buttons -->
+            <div class="d-flex gap-3 mt-4 no-print">
+                <button onclick="window.print()" class="btn btn-outline-dark btn-lg flex-grow-1 fw-bold">
+                    🖨️ Print / Download Ticket
+                </button>
+                <a th:href="@{/my-bookings}" class="btn bms-btn-primary btn-lg flex-grow-1 fw-bold">
+                    View My Bookings
+                </a>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer :: footer" class="no-print"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
